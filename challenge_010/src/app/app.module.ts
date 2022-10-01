@@ -12,6 +12,9 @@ import { AlterEgoDirective } from './shared/alter-ego.directive';
 import { ForbiddenNameDirective } from './shared/forbidden-name.directive';
 import { IdentityRevealedDirective } from './shared/identity-revealed.directive';
 import { NoPageComponent } from './no-page/no-page.component';
+import { DynamicFormContainerComponent } from './dynamic-form-container/dynamic-form-container.component';
+import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
+import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { NoPageComponent } from './no-page/no-page.component';
     ForbiddenNameDirective,
     IdentityRevealedDirective,
     NoPageComponent,
+    DynamicFormContainerComponent,
+    DynamicFormQuestionComponent,
+    DynamicFormComponent,
   ],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule],
   providers: [],
