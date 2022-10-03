@@ -15,6 +15,10 @@ import { NoPageComponent } from './no-page/no-page.component';
 import { DynamicFormContainerComponent } from './dynamic-form-container/dynamic-form-container.component';
 import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { FormTemplateComponent } from './form-template/form-template.component';
+import { FormReactiveComponent } from './form-reactive/form-reactive.component';
+import { AssignmentTdComponent } from './assignment-td/assignment-td.component';
+import { AssignmentReactiveComponent } from './assignment-reactive/assignment-reactive.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,10 @@ import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
     DynamicFormContainerComponent,
     DynamicFormQuestionComponent,
     DynamicFormComponent,
+    FormTemplateComponent,
+    FormReactiveComponent,
+    AssignmentTdComponent,
+    AssignmentReactiveComponent,
   ],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule],
   providers: [],

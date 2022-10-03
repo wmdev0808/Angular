@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="projectForm" (ngSubmit)="onSaveProject()">
+        <div class="row">
+          <div class="col p-2">
+            <label for="name">Project Name</label>
+            <input
+              type="text"
+              id="name"
+              formControlName="projectName"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                projectName.invalid &&
+                (projectName.dirty || projectName.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="projectName.errors?.['required']">
+                Project name is required.
+              </div>
+              <div *ngIf="projectName.errors?.['invalidProjectName']">
+                Invalid project name.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col p-2">
+            <label for="email">Mail</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-control"
+            />
+            <div
+              *ngIf="email.invalid && (email.dirty || email.touched)"
+              class="alert alert-danger"
+            >
+              <div *ngIf="email.errors?.['email']">Invalid email.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col p-2">
+            <label for="status">Projectstatus</label>
+            <select
+              id="status"
+              formControlName="projectStatus"
+              class="form-control"
+            >
+              <option value="stable">Stable</option>
+              <option value="critical">Critical</option>
+              <option value="finished">Finished</option>
+            </select>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-primary my-2"
+          type="submit"
+          [disabled]="projectForm.invalid"
+        >
+          Create Project
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

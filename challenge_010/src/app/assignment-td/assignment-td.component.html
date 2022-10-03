@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col">
+            <label for="email">Mail</label>
+            <input
+              type="email"
+              id="email"
+              ngModel
+              name="email"
+              required
+              email
+              class="form-control"
+              #email="ngModel"
+            />
+            <span class="help-block" *ngIf="!email.valid && email.touched"
+              >Please enter a valid email!</span
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="subscription">Choose a Subscription</label>
+            <select
+              name="subscription"
+              id="subscription"
+              [ngModel]="selectedSubscription"
+              class="form-control"
+            >
+              <option
+                *ngFor="let subscription of subscriptions"
+                [value]="subscription"
+              >
+                {{ subscription }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              ngModel
+              required
+              class="form-control"
+              #password="ngModel"
+            />
+            <span class="help-block" *ngIf="!password.valid && password.touched"
+              >Please enter a valid password!</span
+            >
+          </div>
+        </div>
+
+        <p *ngIf="!signupForm.valid && signupForm.touched" class="my-2">
+          The form is invalid!
+        </p>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-primary my-2" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
