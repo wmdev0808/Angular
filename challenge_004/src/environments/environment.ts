@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'https://angular-757e5-default-rtdb.firebaseio.com',
+  apiKey: 'AIzaSyD9EMuMyl5qqPtHv8aW8kkftDwGhaKcE-A',
 };
 
 /*
