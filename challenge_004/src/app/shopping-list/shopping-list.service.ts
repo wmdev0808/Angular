@@ -1,10 +1,6 @@
 import { Subject } from 'rxjs';
-import { EventEmitter, Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.modle';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
