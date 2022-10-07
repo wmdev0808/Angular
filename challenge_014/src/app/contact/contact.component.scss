@@ -1,0 +1,17 @@
+.button-group {
+  display: flex;
+  flex-direction: row;
+}
+button {
+  margin: 1rem 1rem 0 0;
+}
+
+input {
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.alert {
+  color: red;
+  font-style: italic;
+}
