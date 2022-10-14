@@ -1,0 +1,22 @@
+p {
+  font-family: Lato;
+}
+
+ol {
+  padding: 0;
+  a {
+    display: block;
+    padding: 20px;
+    background-color: #e8e8e8;
+    color: #3d3d3d;
+  }
+
+  a:hover {
+    color: white;
+    background-color: #42545c;
+  }
+  a.active {
+    background-color: black;
+    color: white;
+  }
+}

@@ -1,0 +1,11 @@
+<ol *ngIf="cars$ | async as cars">
+  <a
+    *ngFor="let car of cars"
+    [routerLink]="car.id"
+    [routerLinkActive]="'active'"
+  >
+    <li>{{ car.make }} | {{ car.model }} | {{ car.year }}</li>
+  </a>
+</ol>
+
+<router-outlet></router-outlet>
