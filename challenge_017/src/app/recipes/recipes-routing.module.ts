@@ -18,12 +18,12 @@ const routes: Routes = [
       {
         path: ':id',
         component: RecipeDetailComponent,
-        resolve: [RecipesResolver],
+        resolve: { recipes: RecipesResolver },
       },
       {
         path: ':id/edit',
         component: RecipeEditComponent,
-        resolve: [RecipesResolver],
+        resolve: { recipes: RecipesResolver },
       },
     ],
   },
