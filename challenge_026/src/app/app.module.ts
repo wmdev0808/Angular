@@ -8,6 +8,9 @@ import { InnerHtmlBindingComponent } from './security/inner-html-binding/inner-h
 import { BypassSecurityComponent } from './security/bypass-security/bypass-security.component';
 import { AccessibilityComponent } from './accessibility/accessibility.component';
 import { ProgressBarComponent } from './accessibility/progress-bar/progress-bar.component';
+import { PropertyBindingComponent } from './property-binding/property-binding.component';
+import { ItemListComponent } from './property-binding/item-list/item-list.component';
+import { ItemDetailComponent } from './property-binding/item-detail/item-detail.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { ProgressBarComponent } from './accessibility/progress-bar/progress-bar.
     InnerHtmlBindingComponent,
     BypassSecurityComponent,
     AccessibilityComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    PropertyBindingComponent,
+    ItemListComponent,
+    ItemDetailComponent
   ],
   imports: [
     BrowserModule,
