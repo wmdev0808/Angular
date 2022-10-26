@@ -1,0 +1,26 @@
+{
+  "name": "@example/copy-file",
+  "version": "1.0.0",
+  "description": "Builder for copying files",
+  "builders": "builders.json",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "ts-node node_modules/jasmine/bin/jasmine src/index.spec.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular-devkit/architect": "^0.1402.6",
+    "@angular-devkit/core": "^14.2.6"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^4.3.0",
+    "@types/node": "^18.11.6",
+    "jasmine": "^4.4.0",
+    "jasmine-node": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  }
+}

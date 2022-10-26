@@ -1,0 +1,9 @@
+{
+  "builders": {
+    "copy": {
+      "implementation": "./src",
+      "schema": "./src/schema.json",
+      "description": "Copies a file."
+    }
+  }
+}
