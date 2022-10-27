@@ -2522,6 +2522,1216 @@ angular.json
 
 ## Language service
 
+- The Angular Language Service provides code editors with a way to get completions, errors, hints, and navigation inside Angular templates. It works with external templates in separate HTML files, and also with in-line templates.
+
+### Configuring compiler options for the Angular Language Service
+
+- To enable the latest Language Service features, set the `strictTemplates` option in `tsconfig.json` by setting `strictTemplates` to `true`, as shown in the following example:
+
+  ```
+  "angularCompilerOptions": {
+    "strictTemplates": true
+  }
+  ```
+
+### Featres
+
+- Your editor autodetects that you are opening an Angular file. It then uses the Angular Language Service to read your tsconfig.json file, find all the templates you have in your application, and then provide language services for any templates that you open.
+
+- Language services include:
+
+  - Completions lists
+  - AOT Diagnostic messages
+  - Quick info
+  - Go to definition
+
+#### Autocompletion
+
+- Autocompletion can speed up your development time by providing you with contextual possibilities and hints as you type. This example shows autocomplete in an interpolation. As you type it out, you can press tab to complete.
+
+  ![](https://angular.io/generated/images/guide/language-service/language-completion.gif)
+
+- There are also completions within elements. Any elements you have as a component selector will show up in the completion list.
+
+#### Error checking
+
+- The Angular Language Service can forewarn you of mistakes in your code. In this example, Angular doesn't know what `orders` is or where it comes from.
+
+  ![](https://angular.io/generated/images/guide/language-service/language-error.gif)
+
+#### Quick info and navigation
+
+- The quick-info feature lets you hover to see where components, directives, and modules come from. You can then click "Go to definition" or press F12 to go directly to the definition.
+
+  ![](https://angular.io/generated/images/guide/language-service/language-navigation.gif)
+
+### Angular Language Service in your editor
+
+- Angular Language Service is currently available as an extension for Visual Studio Code, WebStorm, Sublime Text and Eclipse IDE.
+
+#### Visual Studio Code
+
+- In Visual Studio Code, install the extension from the Extensions: Marketplace. Open the marketplace from the editor using the Extensions icon on the left menu pane, or use VS Quick Open (⌘+P on Mac, CTRL+P on Windows) and type "? ext". In the marketplace, search for Angular Language Service extension, and click the Install button.
+
+- The Visual Studio Code integration with the Angular language service is maintained and distributed by the Angular team.
+
+### How the Language Service works
+
+- When you use an editor with a language service, the editor starts a separate language-service process and communicates with it through an [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call), using the [Language Server Protocol](https://microsoft.github.io/language-server-protocol). When you type into the editor, the editor sends information to the language-service process to track the state of your project.
+
+- When you trigger a completion list within a template, the editor first parses the template into an HTML [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree). The Angular compiler interprets that tree to determine the context: which module the template is part of, the current scope, the component selector, and where your cursor is in the template AST. It can then determine the symbols that could potentially be at that position.
+
+- It's a little more involved if you are in an interpolation. If you have an interpolation of {{data.---}} inside a div and need the completion list after data.---, the compiler can't use the HTML AST to find the answer. The HTML AST can only tell the compiler that there is some text with the characters "{{data.---}}". That's when the template parser produces an expression AST, which resides within the template AST. The Angular Language Services then looks at data.--- within its context, asks the TypeScript Language Service what the members of data are, and returns the list of possibilities.
+
 ## DevTools
 
+- Angular DevTools is a browser extension that provides debugging and profiling capabilities for Angular applications. Angular DevTools supports Angular v12 and later.
+
+- When you open the extension, you'll see two additional tabs:
+  |TABS| DETAILS|
+  |----|---------|
+  |Components| Lets you explore the components and directives in your application and preview or edit their state.|
+  |Profiler| Lets you profile your application and understand what the performance bottleneck is during change detection execution.|
+
+  ![](https://angular.io/generated/images/guide/devtools/devtools-tabs.png)
+
+  - In the top-right corner of Angular DevTools you'll find which version of Angular is running on the page as well as the latest commit hash for the extension.
+
+### Debug your application
+
+- The **Components** tab lets you explore the structure of your application. You can visualize and inspect the component and directive instances and preview or modify their state. In the next couple of sections we'll look into how to use this tab effectively to debug your application.
+
+#### Explore the application structure
+
+![](https://angular.io/generated/images/guide/devtools/component-explorer.png)
+
+- In the preceding screenshot, you can see the component tree of an application.
+
+- The component tree displays a hierarchical relationship of the components and directives within your application. When you select a component or a directive instance, Angular DevTools presents additional information about that instance.
+
+#### View properties
+
+- Click the individual components or directives in the component explorer to select them and preview their properties. Angular DevTools displays their properties and metadata on the right-hand side of the component tree.
+
+- To look up a component or directive by name use the search box above the component tree. To navigate to the next search match, press Enter. To navigate to the previous search match, press Shift + Enter.
+
+  ![](https://angular.io/generated/images/guide/devtools/search.png)
+
+#### Navigate to the host node
+
+- To go to the host element of a particular component or directive, find it in the component explorer and double-click it. Browsers' DevTools opens the Elements tab in Chrome or the Inspector one in Firefox, and selects the associated DOM node.
+
+#### Navigate to source
+
+- For components, Angular DevTools also lets you navigate to the component definition in the source tab. After you select a particular component, click the icon at the top-right of the properties view:
+
+  ![](https://angular.io/generated/images/guide/devtools/navigate-source.png)
+
+#### Update property value
+
+- Like browsers' DevTools, the properties view lets you edit the value of an input, output, or another property. Right-click on the property value. If edit functionality is available for this value type, you'll see a text input. Type the new value and press Enter.
+
+  ![](https://angular.io/generated/images/guide/devtools/update-property.png)
+
+#### Access selected component or directive in console
+
+- As a shortcut in the console, Angular DevTools provides you access to instances of the recently selected components or directives. Type `$ng0` to get a reference to the instance of the currently selected component or directive, and type `$ng1` for the previously selected instance.
+
+  ![](https://angular.io/generated/images/guide/devtools/access-console.png)
+
+#### Select a directive or component
+
+- Similar to browsers' DevTools, you can inspect the page to select a particular component or directive. Click the _Inspect element_ icon in the top left corner within Angular DevTools and hover over a DOM element on the page. The extension recognizes the associated directives and/or components and lets you select the corresponding element in the Component tree.
+
+  ![](https://angular.io/generated/images/guide/devtools/inspect-element.png)
+
+### Profile your application
+
+- The **Profiler** tab lets you preview the execution of Angular's change detection.
+
+  ![](https://angular.io/generated/images/guide/devtools/profiler.png)
+
+- The Profiler lets you start profiling or import an existing profile. To start profiling your application, hover over the circle in the top-left corner within the `Profiler` tab and click `Start recording`.
+
+- During profiling, Angular DevTools captures execution events, such as change detection and lifecycle hook execution. To finish recording, click the circle again to `Stop recording`.
+
+- You can also import an existing recording. Read more about this feature in the Import recording section.
+
+#### Understand your application's execution
+
+- In the following screenshot, find the default view of the Profiler after you complete recording.
+
+  ![](https://angular.io/generated/images/guide/devtools/default-profiler-view.png)
+
+- Near the top of the view you can see a sequence of bars, each one of them symbolizing change detection cycles in your app. The taller a bar is, the longer your application has spent in this cycle. When you select a bar, DevTools renders a bar chart with all the components and directives that it captured during this cycle.
+
+  ![](https://angular.io/generated/images/guide/devtools/profiler-selected-bar.png)
+
+- Earlier on the change detection timeline, you can find how much time Angular spent in this cycle. Angular DevTools attempts to estimate the frame drop at this point to indicate when the execution of your application might impact the user experience.
+
+- Angular DevTools also indicates what triggered the change detection (that is, the change detection's source).
+
+#### Understand component execution
+
+- When you click on a bar, you'll find a detailed view about how much time your application spent in the particular directive or component:
+
+  ![](https://angular.io/generated/images/guide/devtools/directive-details.png)
+
+  - Figure shows the total time spent by NgforOf directive and which method was called in it. It also shows the parent hierarchy of the directive selected.
+
+#### Hierarchical views
+
+![](https://angular.io/generated/images/guide/devtools/flame-graph-view.png)
+
+- You can also preview the change detection execution in a flame graph-like view. Each tile in the graph represents an element on the screen at a specific position in the render tree.
+
+- For example, if during one change detection cycle at a specific position in the component tree you had ComponentA, this component was removed and in its place Angular rendered ComponentB, you'll see both components at the same tile.
+
+- Each tile is colored depending on how much time Angular spent there. DevTools determines the intensity of the color by the time spent relative to the tile where we've spent the most time in change detection.
+
+- When you click on a certain tile, you'll see details about it in the panel on the right. Double-clicking the tile zooms it in so you can preview the nested children.
+
+#### Debug OnPush
+
+- To preview the components in which Angular did change detection, select the Change detection checkbox at the top, above the flame graph.
+
+- This view colors all the tiles in which Angular performed change detection in green, and the rest in gray:
+
+  ![](https://angular.io/generated/images/guide/devtools/debugging-onpush.png)
+
+#### Import recording
+
+- Click the Save Profile button at the top-left of a recorded profiling session to export it as a JSON file and save it to the disk. Then, import the file in the initial view of the profiler by clicking the Choose file input:
+
+  ![](https://angular.io/generated/images/guide/devtools/save-profile.png)
+
 ## Schematics
+
+### Schematics Overview
+
+#### Generating code using schematics
+
+- A schematic is a template-based code generator that supports complex logic. It is a set of instructions for transforming a software project by generating or modifying code. Schematics are packaged into `collections` and installed with npm.
+
+- The schematic collection can be a powerful tool for creating, modifying, and maintaining any software project, but is particularly useful for customizing Angular projects to suit the particular needs of your own organization. You might use schematics, for example, to generate commonly-used UI patterns or specific components, using predefined templates or layouts. Use schematics to enforce architectural rules and conventions, making your projects consistent and interoperative.
+
+#### Schematics for the Angular CLI
+
+- Schematics are part of the Angular ecosystem. The Angular CLI uses schematics to apply transforms to a web-app project. You can modify these schematics, and define new ones to do things like update your code to fix breaking changes in a dependency, for example, or to add a new configuration option or framework to an existing project.
+
+- Schematics that are included in the `@schematics/angular` collection are run by default by the commands `ng generate` and `ng add`. The package contains named schematics that configure the options that are available to the CLI for `ng generate` sub-commands, such as `ng generate component` and `ng generate service`. The sub-commands for `ng generate` are shorthand for the corresponding schematic. To specify and generate a particular schematic, or a collection of schematics, using the long form:
+
+  ```
+  ng generate my-schematic-collection:my-schematic-name
+  ```
+
+  or
+
+  ```
+  ng generate my-schematic-name --collection collection-name
+  ```
+
+##### Configuring CLI schematics
+
+- A JSON schema associated with a schematic tells the Angular CLI what options are available to commands and sub-commands, and determines the defaults. These defaults can be overridden by providing a different value for an option on the command line. See Workspace Configuration for information about how to change the generation option defaults for your workspace.
+
+- The JSON schemas for the default schematics used by the CLI to generate projects and parts of projects are collected in the package `@schematics/angular`
+  . The schema describes the options available to the CLI for each of the `ng generate` sub-commands, as shown in the `--help` output.
+
+#### Developing schematics for libraries
+
+- As a library developer, you can create your own collections of custom schematics to integrate your library with the Angular CLI.
+
+  - An add schematic lets developers install your library in an Angular workspace using `ng add`
+
+  - Generation schematics can tell the `ng generate` sub-commands how to modify projects, add configurations and scripts, and scaffold artifacts that are defined in your library
+
+  - An update schematic can tell the `ng update` command how to update your library's dependencies and adjust for breaking changes when you release a new version
+
+##### Add schematics
+
+- An add schematic is typically supplied with a library, so that the library can be added to an existing project with `ng add`. The `add` command uses your package manager to download new dependencies, and invokes an installation script that is implemented as a schematic.
+
+- For example, the [@angular/material](https://material.angular.io/guide/schematics) schematic tells the add command to install and set up Angular Material and theming, and register new starter components that can be created with `ng generate`. Look at this one as an example and model for your own add schematic.
+
+- Partner and third party libraries also support the Angular CLI with add schematics. For example, `@ng-bootstrap/schematics` adds [ng-bootstrap](https://ng-bootstrap.github.io/) to an app, and `@clr/angular` installs and sets up [Clarity from VMWare](https://clarity.design/documentation/get-started).
+
+- An add schematic can also update a project with configuration changes, add additional dependencies (such as polyfills), or scaffold package-specific initialization code. For example, the `@angular/pwa` schematic turns your application into a PWA by adding an application manifest and service worker.
+
+##### Generation schematics
+
+- Generation schematics are instructions for the `ng generate` command. The documented sub-commands use the default Angular generation schematics, but you can specify a different schematic (in place of a sub-command) to generate an artifact defined in your library.
+
+- Angular Material, for example, supplies generation schematics for the UI components that it defines. The following command uses one of these schematics to render an Angular Material `<mat-table>` that is pre-configured with a datasource for sorting and pagination.
+
+  ```
+  ng generate @angular/material:table <component-name>
+  ```
+
+##### Update schematics
+
+- The `ng update` command can be used to update your workspace's library dependencies. If you supply no options or use the help option, the command examines your workspace and suggests libraries to update.
+
+  ```
+  ng update
+  We analyzed your package.json, there are some packages to update:
+
+    Name                                      Version                     Command to update
+    ‐-------------------------------------------------------------------------------
+    @angular/cdk                       7.2.2 -> 7.3.1           ng update @angular/cdk
+    @angular/cli                       7.2.3 -> 7.3.0           ng update @angular/cli
+    @angular/core                      7.2.2 -> 7.2.3           ng update @angular/core
+    @angular/material                  7.2.2 -> 7.3.1           ng update @angular/material
+    rxjs                                      6.3.3 -> 6.4.0           ng update rxjs
+
+    There might be additional packages that are outdated.
+    Run "ng update --all" to try to update all at the same time.
+  ```
+
+- If you pass the command a set of libraries to update (or the --all flag), it updates those libraries, their peer dependencies, and the peer dependencies that depend on them.
+
+  - If there are inconsistencies (for example, if peer dependencies cannot be matched by a simple semver range), the command generates an error and does not change anything in the workspace.
+
+  - We recommend that you do not force an update of all dependencies by default. Try updating specific dependencies first.
+
+- If you create a new version of your library that introduces potential breaking changes, you can provide an update schematic to enable the ng update command to automatically resolve any such changes in the project being updated.
+
+  - For example, suppose you want to update the Angular Material library.
+
+    ```
+    ng update @angular/material
+    ```
+
+  - This command updates both `@angular/material` and its dependency `@angular/cdk` in your workspace's `package.json`. If either package contains an update schematic that covers migration from the existing version to a new version, the command runs that schematic on your workspace.
+
+### Authoring schematics
+
+- You can create your own schematics to operate on Angular projects. Library developers typically package schematics with their libraries to integrate them with the Angular CLI. You can also create stand-alone schematics to manipulate the files and constructs in Angular applications as a way of customizing them for your development environment and making them conform to your standards and constraints. Schematics can be chained, running other schematics to perform complex operations.
+
+- Manipulating the code in an application has the potential to be both very powerful and correspondingly dangerous. For example, creating a file that already exists would be an error, and if it was applied immediately, it would discard all the other changes applied so far. The Angular Schematics tooling guards against side effects and errors by creating a virtual file system. A schematic describes a pipeline of transformations that can be applied to the virtual file system. When a schematic runs, the transformations are recorded in memory, and only applied in the real file system once they're confirmed to be valid.
+
+#### Schematics concepts
+
+- The public API for schematics defines classes that represent the basic concepts.
+
+  - The virtual file system is represented by a `Tree`. The `Tree` data structure contains a base (a set of files that already exists) and a staging area (a list of changes to be applied to the base). When making modifications, you don't actually change the base, but add those modifications to the staging area.
+
+  - A `Rule` object defines a function that takes a `Tree`, applies transformations, and returns a new `Tree`. The main file for a schematic, `index.ts`, defines a set of rules that implement the schematic's logic.
+
+  - A transformation is represented by an `Action`. There are four action types: `Create`, `Rename`, `Overwrite`, and `Delete`.
+
+  - Each schematic runs in a context, represented by a `SchematicContext` object.
+
+- The context object passed into a rule provides access to utility functions and metadata that the schematic might need to work with, including a logging API to help with debugging. The context also defines a _merge strategy_ that determines how changes are merged from the staged tree into the base tree. A change can be accepted or ignored, or throw an exception.
+
+##### Defining rules and actions
+
+- When you create a new blank schematic with the `Schematics CLI`, the generated entry function is a _rule factory_. A `RuleFactory` object defines a higher-order function that creates a `Rule`.
+
+  - index.ts
+
+    ```
+    import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+
+    // You don't have to export the function as default.
+    // You can also have more than one rule factory per file.
+    export function helloWorld(_options: any): Rule {
+      return (tree: Tree, _context: SchematicContext) => {
+        return tree;
+      };
+    }
+    ```
+
+- Your rules can make changes to your projects by calling external tools and implementing logic. You need a rule, for example, to define how a template in the schematic is to be merged into the hosting project.
+
+- Rules can make use of utilities provided with the `@schematics/angular` package. Look for helper functions for working with modules, dependencies, TypeScript, AST, JSON, Angular CLI workspaces and projects, and more.
+
+  - index.ts
+    ```
+    import {
+      JsonAstObject,
+      JsonObject,
+      JsonValue,
+      Path,
+      normalize,
+      parseJsonAst,
+      strings,
+    } from '@angular-devkit/core';
+    ```
+
+##### Defining input options with a schema and interfaces
+
+- Rules can collect option values from the caller and inject them into templates. The options available to your rules, with their allowed values and defaults, are defined in the schematic's JSON schema file, `<schematic>/schema.json`. Define variable or enumerated data types for the schema using TypeScript interfaces.
+
+- The schema defines the types and default values of variables used in the schematic. For example, the hypothetical "Hello World" schematic might have the following schema.
+
+  - src/hello-world/schema.json
+    ```
+    {
+        "properties": {
+            "name": {
+                "type": "string",
+                "minLength": 1,
+                "default": "world"
+            },
+            "useColor": {
+                "type": "boolean"
+            }
+        }
+    }
+    ```
+
+- See examples of schema files for the Angular CLI command schematics in [@schematics/angular](https://github.com/angular/angular-cli/blob/main/packages/schematics/angular/application/schema.json)
+  .
+
+##### Schematic prompts
+
+- Schematic prompts introduce user interaction into schematic execution. Configure schematic options to display a customizable question to the user. The prompts are displayed before the execution of the schematic, which then uses the response as the value for the option. This lets users direct the operation of the schematic without requiring in-depth knowledge of the full spectrum of available options.
+
+  - The "Hello World" schematic might, for example, ask the user for their name, and display that name in place of the default name "world". To define such a prompt, add an `x-prompt` property to the schema for the `name` variable.
+
+  - Similarly, you can add a prompt to let the user decide whether the schematic uses color when executing its hello action. The schema with both prompts would be as follows.
+
+    - src/hello-world/schema.json
+      ```
+      {
+          "properties": {
+              "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "world",
+                  "x-prompt": "What is your name?"
+              },
+              "useColor": {
+                  "type": "boolean",
+                  "x-prompt": "Would you like the response in color?"
+              }
+          }
+      }
+      ```
+
+- **Prompt short-form syntax**
+
+  - These examples use a shorthand form of the prompt syntax, supplying only the text of the question. In most cases, this is all that is required. Notice however, that the two prompts expect different types of input. When using the shorthand form, the most appropriate type is automatically selected based on the property's schema. In the example, the `name` prompt uses the `input` type because it is a string property. The `useColor` prompt uses a `confirmation` type because it is a Boolean property. In this case, "yes" corresponds to true and "no" corresponds to false.
+
+  - There are three supported input types.
+
+    | INPUT TYPE   | DETAILS                                            |
+    | ------------ | -------------------------------------------------- |
+    | confirmation | A yes or no question; ideal for Boolean options.   |
+    | input        | Textual input; ideal for string or number options. |
+    | list         | A predefined set of allowed values.                |
+
+  - In the short form, the type is inferred from the property's type and constraints.
+
+    | PROPERTY SCHEMA   | PROMPT TYPE                                |
+    | ----------------- | ------------------------------------------ |
+    | "type": "boolean" | confirmation ("yes"=true, "no"=false)      |
+    | "type": "string"  | input                                      |
+    | "type": "number"  | input (only valid numbers accepted)        |
+    | "type": "integer" | input (only valid numbers accepted)        |
+    | "enum": […]       | list (enum members become list selections) |
+
+  - In the following example, the property takes an enumerated value, so the schematic automatically chooses the list type, and creates a menu from the possible values.
+
+    - schema.json
+      ```
+      "style": {
+        "description": "The file extension or preprocessor to use for style files.",
+        "type": "string",
+        "default": "css",
+        "enum": [
+          "css",
+          "scss",
+          "sass",
+          "less",
+          "styl"
+        ],
+        "x-prompt": "Which stylesheet format would you like to use?"
+      }
+      ```
+
+  - The prompt runtime automatically validates the provided response against the constraints provided in the JSON schema. If the value is not acceptable, the user is prompted for a new value. This ensures that any values passed to the schematic meet the expectations of the schematic's implementation, so that you do not need to add additional checks within the schematic's code.
+
+- **Prompt long-form syntax**
+
+  - The `x-prompt` field syntax supports a long form for cases where you require additional customization and control over the prompt. In this form, the `x-prompt` field value is a JSON object with subfields that customize the behavior of the prompt.
+
+    | FIELD   | DATA VALUE                                                                |
+    | ------- | ------------------------------------------------------------------------- |
+    | type    | `confirmation`, `input`, or `list` (selected automatically in short form) |
+    | message | string (required)                                                         |
+    | items   | string and/or label/value object pair (only valid with type `list`)       |
+
+  - The following example of the long form is from the JSON schema for the schematic that the CLI uses to `generate applications`. It defines the prompt that lets users choose which style preprocessor they want to use for the application being created. By using the long form, the schematic can provide more explicit formatting of the menu choices.
+
+    - package/schematics/angular/application/schema.json
+      ```
+      "style": {
+        "description": "The file extension or preprocessor to use for style files.",
+        "type": "string",
+        "default": "css",
+        "enum": [
+          "css",
+          "scss",
+          "sass",
+          "less"
+        ],
+        "x-prompt": {
+          "message": "Which stylesheet format would you like to use?",
+          "type": "list",
+          "items": [
+            { "value": "css",  "label": "CSS" },
+            { "value": "scss", "label": "SCSS   [ https://sass-lang.com/documentation/syntax#scss                ]" },
+            { "value": "sass", "label": "Sass   [ https://sass-lang.com/documentation/syntax#the-indented-syntax ]" },
+            { "value": "less", "label": "Less   [ http://lesscss.org/                                            ]" }
+          ]
+        },
+      },
+      ```
+
+- x-prompt schema
+
+  - The JSON schema that defines a schematic's options supports extensions to allow the declarative definition of prompts and their respective behavior. No additional logic or changes are required to the code of a schematic to support the prompts. The following JSON schema is a complete description of the long-form syntax for the `x-prompt` field.
+
+    - x-prompt schema
+      ```
+      {
+        "oneOf": [
+            { "type": "string" },
+            {
+                "type": "object",
+                "properties": {
+                    "type": { "type": "string" },
+                    "message": { "type": "string" },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "oneOf": [
+                                { "type": "string" },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "label": { "type": "string" },
+                                        "value": { }
+                                    },
+                                    "required": [ "value" ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "required": [ "message" ]
+            }
+        ]
+      }
+      ```
+
+#### Schematics CLI
+
+- Schematics come with their own command-line tool. Using Node 6.9 or later, install the Schematics command line tool globally:
+
+  ```
+  npm install -g @angular-devkit/schematics-cli
+  ```
+
+  - This installs the `schematics` executable, which you can use to create a new schematics collection in its own project folder, add a new schematic to an existing collection, or extend an existing schematic.
+
+- In the following sections, you will create a new schematics collection using the CLI to introduce the files and file structure, and some of the basic concepts.
+
+- The most common use of schematics, however, is to integrate an Angular library with the Angular CLI. Do this by creating the schematic files directly within the library project in an Angular workspace, without using the Schematics CLI. See [Schematics for Libraries](https://angular.io/guide/schematics-for-libraries).
+
+##### Creating a schematics collection
+
+- The following command creates a new schematic named `hello-world` in a new project folder of the same name.
+
+  ```
+  schematics blank --name=hello-world
+  ```
+
+- The blank schematic is provided by the Schematics CLI. The command creates a new project folder (the root folder for the collection) and an initial named schematic in the collection.
+
+- Go to the collection folder, install your npm dependencies, and open your new collection in your favorite editor to see the generated files. For example, if you are using VS Code:
+
+  ```
+  cd hello-world
+  npm install
+  npm run build
+  code .
+  ```
+
+- The initial schematic gets the same name as the project folder, and is generated in `src/hello-world`. Add related schematics to this collection, and modify the generated skeleton code to define your schematic's functionality. Each schematic name must be unique within the collection.
+
+##### Running a schematic
+
+- Use the `schematics` command to run a named schematic. Provide the path to the project folder, the schematic name, and any mandatory options, in the following format.
+
+  ```
+  schematics <path-to-schematics-project>:<schematics-name> --<required-option>=<value>
+  ```
+
+- The path can be absolute or relative to the current working directory where the command is executed. For example, to run the schematic you just generated (which has no required options), use the following command.
+
+  ```
+  schematics .:hello-world
+  ```
+
+##### Adding a schematic to a collection
+
+- To add a schematic to an existing collection, use the same command you use to start a new schematics project, but run the command inside the project folder.
+
+  ```
+  cd hello-world
+  schematics blank --name=goodbye-world
+  ```
+
+  - The command generates the new named schematic inside your collection, with a main index.ts file and its associated test spec. It also adds the name, description, and factory function for the new schematic to the collection's schema in the `collection.json` file.
+
+#### Collection contents
+
+- The top level of the root project folder for a collection contains configuration files, a `node_modules` folder, and a `src/` folder. The `src/` folder contains subfolders for named schematics in the collection, and a schema, `collection.json`, which describes the collected schematics. Each schematic is created with a name, description, and factory function.
+
+  ```
+  {
+    "$schema":
+      "../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+      "hello-world": {
+        "description": "A blank schematic.",
+        "factory": "./hello-world/index#helloWorld"
+      }
+    }
+  }
+  ```
+
+  - The `$schema` property specifies the schema that the CLI uses for validation.
+
+  - The `schematics` property lists named schematics that belong to this collection. Each schematic has a plain-text description, and points to the generated entry function in the main file.
+
+  - The `factory` property points to the generated entry function. In this example, you invoke the `hello-world` schematic by calling the `helloWorld()` factory function.
+
+  - The optional `schema` property points to a JSON schema file that defines the command-line options available to the schematic.
+
+  - The optional `aliases` array specifies one or more strings that can be used to invoke the schematic. For example, the schematic for the Angular CLI "generate" command has an alias "g", that lets you use the command `ng g`.
+
+##### Named schematics
+
+- When you use the Schematics CLI to create a blank schematics project, the new blank schematic is the first member of the collection, and has the same name as the collection. When you add a new named schematic to this collection, it is automatically added to the `collection.json` schema.
+
+- In addition to the name and description, each schematic has a `factory` property that identifies the schematic's entry point. In the example, you invoke the schematic's defined functionality by calling the `helloWorld()` function in the main file, `hello-world/index.ts`.
+
+  ![](https://angular.io/generated/images/guide/schematics/collection-files.gif)
+
+  - Each named schematic in the collection has the following main parts.
+
+    | PARTS       | DETAILS                                                           |
+    | ----------- | ----------------------------------------------------------------- |
+    | index.ts    | Code that defines the transformation logic for a named schematic. |
+    | schema.json | Schematic variable definition.                                    |
+    | schema.d.ts | Schematic variables.                                              |
+    | files/      | Optional component/template files to replicate.                   |
+
+  - It is possible for a schematic to provide all of its logic in the `index.ts` file, without additional templates. You can create dynamic schematics for Angular, however, by providing components and templates in the `files` folder, like those in standalone Angular projects. The logic in the index file configures these templates by defining rules that inject data and modify variables.
+
+### Schematics for libraries
+
+- When you create an Angular library, you can provide and package it with schematics that integrate it with the Angular CLI. With your schematics, your users can use `ng add` to install an initial version of your library, `ng generate` to create artifacts defined in your library, and `ng update` to adjust their project for a new version of your library that introduces breaking changes.
+
+- All three types of schematics can be part of a collection that you package with your library.
+
+- Download the [library schematics project](https://angular.io/generated/zips/schematics-for-libraries/schematics-for-libraries.zip) for a completed example of the following steps.
+
+#### Creating a schematics collection
+
+- To start a collection, you need to create the schematic files. The following steps show you how to add initial support without modifying any project files.
+
+  - 1. In your library's root folder, create a `schematics` folder.
+
+  - 2. In the `schematics/` folder, create an `ng-add` folder for your first schematic.
+
+  - 3. At the root level of the `schematics` folder, create a `collection.json` file.
+
+  - 4. Edit the `collection.json` file to define the initial schema for your collection.
+
+    - projects/my-lib/schematics/collection.json (Schematics Collection)
+
+      ```
+      {
+        "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+        "schematics": {
+          "ng-add": {
+            "description": "Add my library to the project.",
+            "factory": "./ng-add/index#ngAdd"
+          }
+        }
+      }
+      ```
+
+      - The `$schema` path is relative to the Angular Devkit collection schema.
+      - The `schematics` object describes the named schematics that are part of this collection.
+      - The first entry is for a schematic named `ng-add`. It contains the description, and points to the factory function that is called when your schematic is executed.
+
+  - 5. In your library project's `package.json` file, add a "schematics" entry with the path to your schema file. The Angular CLI uses this entry to find named schematics in your collection when it runs commands.
+
+    - projects/my-lib/package.json (Schematics Collection Reference)
+
+      ```
+      {
+        "name": "my-lib",
+        "version": "0.0.1",
+        "schematics": "./schematics/collection.json",
+      }
+      ```
+
+    - The initial schema that you have created tells the CLI where to find the schematic that supports the `ng add` command. Now you are ready to create that schematic.
+
+#### Providing installation support
+
+- A schematic for the `ng add` command can enhance the initial installation process for your users. The following steps define this type of schematic.
+
+  - 1. Go to the `<lib-root>/schematics/ng-add` folder.
+
+  - 2. Create the main file, `index.ts`.
+
+  - 3. Open `index.ts` and add the source code for your schematic factory function.
+
+    - projects/my-lib/schematics/ng-add/index.ts (ng-add Rule Factory)
+
+      ```
+      import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+      import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+
+      // Just return the tree
+      export function ngAdd(): Rule {
+        return (tree: Tree, context: SchematicContext) => {
+          context.addTask(new NodePackageInstallTask());
+          return tree;
+        };
+      }
+      ```
+
+    - The only step needed to provide initial ng add support is to trigger an installation task using the `SchematicContext`. The task uses the user's preferred package manager to add the library to the project's `package.json` configuration file, and install it in the project's `node_modules` directory.
+
+    - In this example, the function receives the current Tree and returns it without any modifications. If you need to, do additional setup when your package is installed, such as generating files, updating configuration, or any other initial setup your library requires.
+
+##### Define dependency type
+
+- Use the `save` option of `ng-add` to configure if the library should be added to the `dependencies`, the `devDependencies`, or not saved at all in the project's `package.json` configuration file.
+
+  - projects/my-lib/package.json (ng-add Reference)
+
+    ```
+    "ng-add": {
+      "save": "devDependencies"
+    },
+    ```
+
+  - Possible values are:
+
+    | VALUES            | DETAILS                                |
+    | ----------------- | -------------------------------------- |
+    | false             | Don't add the package to package.json  |
+    | true              | Add the package to the dependencies    |
+    | "dependencies"    | Add the package to the dependencies    |
+    | "devDependencies" | Add the package to the devDependencies |
+
+#### Building your schematics
+
+- To bundle your schematics together with your library, you must configure the library to build the schematics separately, then add them to the bundle. You must build your schematics after you build your library, so they are placed in the correct directory.
+
+  - Your library needs a custom Typescript configuration file with instructions on how to compile your schematics into your distributed library
+
+  - To add the schematics to the library bundle, add scripts to the library's `package.json` file
+
+- Assume you have a library project `my-lib` in your Angular workspace. To tell the library how to build the schematics, add a `tsconfig.schematics.json` file next to the generated `tsconfig.lib.json` file that configures the library build.
+
+  - 1. Edit the `tsconfig.schematics.json` file to add the following content.
+
+    - projects/my-lib/tsconfig.schematics.json (TypeScript Config)
+      ```
+      {
+        "compilerOptions": {
+          "baseUrl": ".",
+          "lib": [
+            "es2018",
+            "dom"
+          ],
+          "declaration": true,
+          "module": "commonjs",
+          "moduleResolution": "node",
+          "noEmitOnError": true,
+          "noFallthroughCasesInSwitch": true,
+          "noImplicitAny": true,
+          "noImplicitThis": true,
+          "noUnusedParameters": true,
+          "noUnusedLocals": true,
+          "rootDir": "schematics",
+          "outDir": "../../dist/my-lib/schematics",
+          "skipDefaultLibCheck": true,
+          "skipLibCheck": true,
+          "sourceMap": true,
+          "strictNullChecks": true,
+          "target": "es6",
+          "types": [
+            "jasmine",
+            "node"
+          ]
+        },
+        "include": [
+          "schematics/**/*"
+        ],
+        "exclude": [
+          "schematics/*/files/**/*"
+        ]
+      }
+      ```
+
+    | OPTIONS | DETAILS                                                                                                        |
+    | ------- | -------------------------------------------------------------------------------------------------------------- |
+    | rootDir | Specifies that your schematics folder contains the input files to be compiled.                                 |
+    | outDir  | Maps to the library's output folder. By default, this is the dist/my-lib folder at the root of your workspace. |
+
+  - 2. To make sure your schematics source files get compiled into the library bundle, add the following scripts to the `package.json` file in your library project's root folder (`projects/my-lib`).
+
+    - projects/my-lib/package.json (Build Scripts)
+
+      ```
+      {
+        "name": "my-lib",
+        "version": "0.0.1",
+        "scripts": {
+          "build": "tsc -p tsconfig.schematics.json",
+          "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/my-lib/"
+        },
+        "peerDependencies": {
+          "@angular/common": "^7.2.0",
+          "@angular/core": "^7.2.0"
+        },
+        "schematics": "./schematics/collection.json",
+        "ng-add": {
+          "save": "devDependencies"
+        },
+        "devDependencies": {
+          "copyfiles": "file:../../node_modules/copyfiles",
+          "typescript": "file:../../node_modules/typescript"
+        }
+      }
+      ```
+
+      - The `build` script compiles your schematic using the custom `tsconfig.schematics.json` file
+
+      - The `postbuild` script copies the schematic files after the `build` script completes
+
+      - Both the `build` and the `postbuild` scripts require the `copyfiles` and `typescript` dependencies. To install the dependencies, navigate to the path defined in `devDependencies` and run `npm install` before you run the scripts.
+
+#### Providing generation support
+
+- You can add a named schematic to your collection that lets your users use the `ng generate` command to create an artifact that is defined in your library.
+
+- We'll assume that your library defines a service, `my-service`, that requires some setup. You want your users to be able to generate it using the following CLI command.
+
+  ```
+  ng generate my-lib:my-service
+  ```
+
+- To begin, create a new subfolder, `my-service`, in the `schematics` folder.
+
+##### Configure the new schematic
+
+- When you add a schematic to the collection, you have to point to it in the collection's schema, and provide configuration files to define options that a user can pass to the command.
+
+  - 1. Edit the `schematics/collection.json` file to point to the new schematic subfolder, and include a pointer to a schema file that specifies inputs for the new schematic.
+
+    - projects/my-lib/schematics/collection.json (Schematics Collection)
+      ```
+      {
+        "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+        "schematics": {
+          "ng-add": {
+            "description": "Add my library to the project.",
+            "factory": "./ng-add/index#ngAdd"
+          },
+          "my-service": {
+            "description": "Generate a service in the project.",
+            "factory": "./my-service/index#myService",
+            "schema": "./my-service/schema.json"
+          }
+        }
+      }
+      ```
+
+  - 2. Go to the `<lib-root>/schematics/my-service` folder.
+
+  - 3. Create a `schema.json` file and define the available options for the schematic.
+
+    - projects/my-lib/schematics/my-service/schema.json (Schematic JSON Schema)
+
+      ```
+      {
+        "$schema": "http://json-schema.org/schema",
+        "$id": "SchematicsMyService",
+        "title": "My Service Schema",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the service.",
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "format": "path",
+            "description": "The path to create the service.",
+            "visible": false
+          },
+          "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+              "$source": "projectName"
+            }
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+      ```
+
+      - id: A unique ID for the schema in the collection.
+      - title: A human-readable description of the schema.
+      - type: A descriptor for the type provided by the properties.
+      - properties: An object that defines the available options for the schematic.
+
+    - Each option associates key with a type, description, and optional alias. The type defines the shape of the value you expect, and the description is displayed when the user requests usage help for your schematic. See the workspace schema for additional customizations for schematic options.
+
+  - 4. Create a `schema.ts` file and define an interface that stores the values of the options defined in the `schema.json` file.
+
+    - projects/my-lib/schematics/my-service/schema.ts (Schematic Interface)
+
+      ```
+      export interface Schema {
+        // The name of the service.
+        name: string;
+
+        // The path to create the service.
+        path?: string;
+
+        // The name of the project.
+        project?: string;
+      }
+      ```
+
+    | OPTIONS | DETAILS                                                                                                                                     |
+    | ------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+    | name    | The name you want to provide for the created service.                                                                                       |
+    | path    | Overrides the path provided to the schematic. The default path value is based on the current working directory.                             |
+    | project | Provides a specific project to run the schematic on. In the schematic, you can provide a default if the option is not provided by the user. |
+
+##### Add template files
+
+- To add artifacts to a project, your schematic needs its own template files. Schematic templates support special syntax to execute code and variable substitution.
+
+  - 1. Create a `files/` folder inside the `schematics/my-service/` folder.
+
+  - 2. Create a file named `__name@dasherize__.service.ts.template` that defines a template to use for generating files. This template will generate a service that already has Angular's `HttpClient` injected into its constructor.
+
+    - projects/my-lib/schematics/my-service/files/__name@dasherize__.service.ts.template (Schematic Template)
+
+      ```
+      import { Injectable } from '@angular/core';
+      import { HttpClient } from '@angular/common/http';
+
+      @Injectable({
+        providedIn: 'root'
+      })
+      export class <%= classify(name) %>Service {
+        constructor(private http: HttpClient) { }
+      }
+      ```
+
+    - The `classify` and `dasherize` methods are utility functions that your schematic uses to transform your source template and filename.
+
+    - The `name` is provided as a property from your factory function. It is the same name you defined in the schema.
+
+##### Add the factory function
+
+- Now that you have the infrastructure in place, you can define the main function that performs the modifications you need in the user's project.
+
+- The Schematics framework provides a file templating system, which supports both path and content templates. The system operates on placeholders defined inside files or paths that loaded in the input `Tree`. It fills these in using values passed into the `Rule`.
+
+- For details of these data structures and syntax, see the [Schematics README](https://github.com/angular/angular-cli/blob/main/packages/angular_devkit/schematics/README.md).
+
+  - 1. Create the main file `index.ts` and add the source code for your schematic factory function.
+
+  - 2. First, import the schematics definitions you will need. The Schematics framework offers many utility functions to create and use rules when running a schematic.
+
+    - projects/my-lib/schematics/my-service/index.ts (Imports)
+
+      ```
+      import {
+        Rule, Tree, SchematicsException,
+        apply, url, applyTemplates, move,
+        chain, mergeWith
+      } from '@angular-devkit/schematics';
+
+      import { strings, normalize, virtualFs, workspaces } from '@angular-devkit/core';
+      ```
+
+  - 3. Import the defined schema interface that provides the type information for your schematic's options.
+
+    - projects/my-lib/schematics/my-service/index.ts (Schema Import)
+
+      ```
+      import {
+        Rule, Tree, SchematicsException,
+        apply, url, applyTemplates, move,
+        chain, mergeWith
+      } from '@angular-devkit/schematics';
+
+      import { strings, normalize, virtualFs, workspaces } from '@angular-devkit/core';
+
+      import { Schema as MyServiceSchema } from './schema';
+      ```
+
+  - 4. To build up the generation schematic, start with an empty rule factory.
+
+    - projects/my-lib/schematics/my-service/index.ts (Initial Rule)
+
+      ```
+      export function myService(options: MyServiceSchema): Rule {
+        return (tree: Tree) => tree;
+      }
+      ```
+
+    - This rule factory returns the tree without modification. The options are the option values passed through from the `ng generate` command.
+
+#### Define a generation rule
+
+- You now have the framework in place for creating the code that actually modifies the user's application to set it up for the service defined in your library.
+
+- The Angular workspace where the user installed your library contains multiple projects (applications and libraries). The user can specify the project on the command line, or let it default. In either case, your code needs to identify the specific project to which this schematic is being applied, so that you can retrieve information from the project configuration.
+
+- Do this using the `Tree` object that is passed in to the factory function. The `Tree` methods give you access to the complete file tree in your workspace, letting you read and write files during the execution of the schematic.
+
+##### Get the project configuration
+
+- 1. To determine the destination project, use the `workspaces.readWorkspace` method to read the contents of the workspace configuration file, `angular.json`. To use `workspaces.readWorkspace` you need to create a `workspaces.WorkspaceHost` from the `Tree`. Add the following code to your factory function.
+
+  - projects/my-lib/schematics/my-service/index.ts (Schema Import)
+
+    ```
+    import {
+      Rule, Tree, SchematicsException,
+      apply, url, applyTemplates, move,
+      chain, mergeWith
+    } from '@angular-devkit/schematics';
+
+    import { strings, normalize, virtualFs, workspaces } from '@angular-devkit/core';
+
+    import { Schema as MyServiceSchema } from './schema';
+
+    function createHost(tree: Tree): workspaces.WorkspaceHost {
+      return {
+        async readFile(path: string): Promise<string> {
+          const data = tree.read(path);
+          if (!data) {
+            throw new SchematicsException('File not found.');
+          }
+          return virtualFs.fileBufferToString(data);
+        },
+        async writeFile(path: string, data: string): Promise<void> {
+          return tree.overwrite(path, data);
+        },
+        async isDirectory(path: string): Promise<boolean> {
+          return !tree.exists(path) && tree.getDir(path).subfiles.length > 0;
+        },
+        async isFile(path: string): Promise<boolean> {
+          return tree.exists(path);
+        },
+      };
+    }
+
+    export function myService(options: MyServiceSchema): Rule {
+      return async (tree: Tree) => {
+        const host = createHost(tree);
+        const { workspace } = await workspaces.readWorkspace('/', host);
+
+      };
+    }
+    ```
+
+  - Be sure to check that the context exists and throw the appropriate error.
+
+- 2. Now that you have the project name, use it to retrieve the project-specific configuration information.
+
+  - projects/my-lib/schematics/my-service/index.ts (Project)
+
+    ```
+    const project = (options.project != null) ? workspace.projects.get(options.project) : null;
+    if (!project) {
+      throw new SchematicsException(`Invalid project name: ${options.project}`);
+    }
+
+    const projectType = project.extensions.projectType === 'application' ? 'app' : 'lib';
+    ```
+
+  - The `workspace.projects` object contains all the project-specific configuration information.
+
+- 3. The `options.path` determines where the schematic template files are moved to once the schematic is applied.
+
+  - The `path` option in the schematic's schema is substituted by default with the current working directory. If the `path` is not defined, use the `sourceRoot` from the project configuration along with the `projectType`.
+
+    - projects/my-lib/schematics/my-service/index.ts (Project Info)
+      ```
+      if (options.path === undefined) {
+        options.path = `${project.sourceRoot}/${projectType}`;
+      }
+      ```
+
+##### Define the rule
+
+- A `Rule` can use external template files, transform them, and return another `Rule` object with the transformed template. Use the templating to generate any custom files required for your schematic.
+
+  - 1. Add the following code to your factory function.
+
+    - projects/my-lib/schematics/my-service/index.ts (Template transform)
+      ```
+      const templateSource = apply(url('./files'), [
+        applyTemplates({
+          classify: strings.classify,
+          dasherize: strings.dasherize,
+          name: options.name
+        }),
+        move(normalize(options.path as string))
+      ]);
+      ```
+
+    | METHODS          | DETAILS                                                                                                                                                                                                                                          |
+    | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+    | apply()          | Applies multiple rules to a source and returns the transformed source. It takes 2 arguments, a source and an array of rules.                                                                                                                     |
+    | url()            | Reads source files from your filesystem, relative to the schematic.                                                                                                                                                                              |
+    | applyTemplates() | Receives an argument of methods and properties you want make available to the schematic template and the schematic filenames. It returns a `Rule`. This is where you define the `classify()` and `dasherize()` methods, and the `name` property. |
+    | classify()       | Takes a value and returns the value in title case. For example, if the provided name is `my service`, it is returned as `MyService`.                                                                                                             |
+    | dasherize()      | Takes a value and returns the value in dashed and lowercase. For example, if the provided name is `MyService`, it is returned as `my-service`.                                                                                                   |
+    | move()           | Moves the provided source files to their destination when the schematic is applied.                                                                                                                                                              |
+
+  - 2. Finally, the rule factory must return a rule.
+
+    - projects/my-lib/schematics/my-service/index.ts (Chain Rule)
+
+      ```
+      return chain([
+        mergeWith(templateSource)
+      ]);
+      ```
+
+    - The `chain()` method lets you combine multiple rules into a single rule, so that you can perform multiple operations in a single schematic. Here you are only merging the template rules with any code executed by the schematic.
+
+- See a complete example of the following schematic rule function.
+
+  - projects/my-lib/schematics/my-service/index.ts
+
+    ```
+    import {
+      Rule, Tree, SchematicsException,
+      apply, url, applyTemplates, move,
+      chain, mergeWith
+    } from '@angular-devkit/schematics';
+
+    import { strings, normalize, virtualFs, workspaces } from '@angular-devkit/core';
+
+    import { Schema as MyServiceSchema } from './schema';
+
+    function createHost(tree: Tree): workspaces.WorkspaceHost {
+      return {
+        async readFile(path: string): Promise<string> {
+          const data = tree.read(path);
+          if (!data) {
+            throw new SchematicsException('File not found.');
+          }
+          return virtualFs.fileBufferToString(data);
+        },
+        async writeFile(path: string, data: string): Promise<void> {
+          return tree.overwrite(path, data);
+        },
+        async isDirectory(path: string): Promise<boolean> {
+          return !tree.exists(path) && tree.getDir(path).subfiles.length > 0;
+        },
+        async isFile(path: string): Promise<boolean> {
+          return tree.exists(path);
+        },
+      };
+    }
+
+    export function myService(options: MyServiceSchema): Rule {
+      return async (tree: Tree) => {
+        const host = createHost(tree);
+        const { workspace } = await workspaces.readWorkspace('/', host);
+
+
+        const project = (options.project != null) ? workspace.projects.get(options.project) : null;
+        if (!project) {
+          throw new SchematicsException(`Invalid project name: ${options.project}`);
+        }
+
+        const projectType = project.extensions.projectType === 'application' ? 'app' : 'lib';
+
+        if (options.path === undefined) {
+          options.path = `${project.sourceRoot}/${projectType}`;
+        }
+
+        const templateSource = apply(url('./files'), [
+          applyTemplates({
+            classify: strings.classify,
+            dasherize: strings.dasherize,
+            name: options.name
+          }),
+          move(normalize(options.path as string))
+        ]);
+
+        return chain([
+          mergeWith(templateSource)
+        ]);
+      };
+    }
+    ```
+
+#### Running your library schematic
+
+- After you build your library and schematics, you can install the schematics collection to run against your project. The following steps show you how to generate a service using the schematic you created earlier.
+
+##### Build your library and schematics
+
+- From the root of your workspace, run the ng build command for your library.
+
+  ```
+  ng build my-lib
+  ```
+
+- Then, you change into your library directory to build the schematic
+
+  ```
+  cd projects/my-lib
+  npm run build
+  ```
+
+##### Link the library
+
+- Your library and schematics are packaged and placed in the dist/my-lib folder at the root of your workspace. For running the schematic, you need to link the library into your `node_modules` folder. From the root of your workspace, run the `npm link` command with the path to your distributable library.
+
+  ```
+  npm link dist/my-lib
+  ```
+
+##### Run the schematic
+
+- Now that your library is installed, run the schematic using the ng generate command.
+
+  ```
+  ng generate my-lib:my-service --name my-data
+  ```
+
+- In the console, you see that the schematic was run and the my-data.service.ts file was created in your application folder.
+  ```
+  CREATE src/app/my-data.service.ts (208 bytes)
+  ```
