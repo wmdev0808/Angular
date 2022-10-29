@@ -546,7 +546,7 @@
 
 - This table describes the file layout under `node_modules/@angular/core` annotated to describe the purpose of files and directories:
 
-  # FILES | PURPOSE
+- FILES | PURPOSE
 
   - README.md
 

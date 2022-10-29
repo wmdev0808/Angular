@@ -1,4 +1,4 @@
-# Hierachical injectors
+# Hierarchical injectors
 
 - Injectors in Angular have rules that you can leverage to achieve the desired visibility of injectables in your applications. By understanding these rules, you can determine in which NgModule, Component, or Directive you should declare a provider.
 
