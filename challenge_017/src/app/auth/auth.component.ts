@@ -1,4 +1,10 @@
-import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  ViewChild,
+  OnInit,
+  // ComponentFactoryResolver,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -25,7 +31,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   private closeSub!: Subscription;
   private storeSub!: Subscription;
 
-  constructor(private store: Store<fromApp.AppState>, private router: Router) {}
+  constructor(
+    private store: Store<fromApp.AppState>,
+    private router: Router,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) {}
 
   ngOnInit() {
     this.storeSub = this.store.select(selectAuth).subscribe((authState) => {
@@ -72,9 +82,13 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   private showErrorAlert(message: string) {
+    // const alertCmp = new AlertComponent();
+    // const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+
     const hostViewContainerRef = this.alertHost.viewContainerRef;
     hostViewContainerRef.clear();
 
+    // const componentRef = hostViewContainerRef.createComponent(alertCmpFactory);
     const componentRef = hostViewContainerRef.createComponent(AlertComponent);
     componentRef.instance.message = message;
     this.closeSub = componentRef.instance.close.subscribe(() => {
