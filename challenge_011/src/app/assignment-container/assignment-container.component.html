@@ -29,10 +29,16 @@
       </ul>
     </div>
   </div>
-  <h2>Q&A</h2>
+  <h2>Q&A: 01</h2>
   <div class="row">
     <div class="col">
       {{ "some long text" | truncate: 10:true }}
+    </div>
+  </div>
+  <h2>Q&A: 02</h2>
+  <div class="row">
+    <div class="col">
+      {{ count$ | async }}
     </div>
   </div>
 </div>

@@ -179,3 +179,8 @@ Angular challenges
   - [Extended diagnostic reference](challenge_029/README.md#extended-diagnostic-reference)
   - [Angular glossary](challenge_029/README.md#angular-glossary)
   - [Angular coding style](challenge_029/README.md#angular-coding-style)
+- [Component Styles](challenge_030/README.md)
+  - [Using component styles](challenge_030/README.md#using-component-styles)
+  - [Component styling best practices](challenge_030/README.md#component-styling-best-practices)
+  - [Special selectors](challenge_030/README.md#special-selectors)
+  - [Loading component styles](challenge_030/README.md#loading-componet-styles)

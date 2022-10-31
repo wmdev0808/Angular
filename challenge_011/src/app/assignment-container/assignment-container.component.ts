@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Server } from '../pipe-container/pipe-container.component';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-assignment-container',
@@ -7,6 +8,7 @@ import { Server } from '../pipe-container/pipe-container.component';
   styleUrls: ['./assignment-container.component.scss'],
 })
 export class AssignmentContainerComponent {
+  count$ = of(NaN);
   appStatus = new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve('stable');
