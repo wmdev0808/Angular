@@ -253,4 +253,44 @@
   - Build a reverse pipe that basically reverses a string. (There is a reverse method in JavaScript that you can use but it only works on “real arrays”, not on string which technically is array of characters) (Hint: You would have to split the string by empty character first, then apply reverse and then join it together with empty character to get a string again)
 
 - Task 2
+
   - Build a sort pipe, which sorts this list by name of the instance, production user database and so on.
+
+- Q&A 01:
+
+  - what would be an example template syntax usage of this custom pipe?
+
+    ```
+    @Pipe({ name: 'truncate' })
+    export class TruncatePipe implements PipeTransform {
+      transform(value: string, maxLength: number, showEllipsis: boolean) {
+        const newValue = maxLength ? value.substr(0, maxLength) : value;
+        return showEllipsis ? `${newValue}...` : newValue;
+      }
+    }
+    ```
+
+    ============================
+
+    - A): TRUE
+      ```
+      {{ 'some long text' | truncate: 10: true }}
+      ```
+
+    B):
+
+    ```
+    {{ 'some long text' | truncate: 10 }}
+    ```
+
+    C):
+
+    ```
+    {{ 'some long text' | truncate }}
+    ```
+
+    D):
+
+    ```
+    all of these answers
+    ```

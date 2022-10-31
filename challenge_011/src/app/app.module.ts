@@ -11,6 +11,7 @@ import { ShortenPipe } from './shorten.pipe';
 import { FilterPipe } from './filter.pipe';
 import { ReversePipe } from './reverse.pipe';
 import { SortPipe } from './sort.pipe';
+import { TruncatePipe } from './truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SortPipe } from './sort.pipe';
     FilterPipe,
     ReversePipe,
     SortPipe,
+    TruncatePipe,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule],
   providers: [],
