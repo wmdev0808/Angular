@@ -175,6 +175,8 @@ Angular challenges
   - [Angular Libraries](challenge_028/README.md#angular-libraries)
 - [Reference](challenge_029/README.md)
   - [CLI Command Reference](challenge_029/README.md#cli-command-reference)
+  - [API reference](challenge_029/README.md#api-reference)
+    - [DecimalPipe](challenge_029/README.md#decimalpipe)
   - [Error reference](challenge_029/README.md#error-reference)
   - [Extended diagnostic reference](challenge_029/README.md#extended-diagnostic-reference)
   - [Angular glossary](challenge_029/README.md#angular-glossary)

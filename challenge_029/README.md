@@ -107,6 +107,109 @@
 
 ## API reference
 
+### DecimalPipe
+
+- Formats a value according to digit options and locale rules. Locale determines group sizing and separator, decimal point character, and other locale-specific configurations.
+
+  ```
+  {{ value_expression | number [ : digitsInfo [ : locale ] ] }}
+  ```
+
+#### Exported from
+
+- CommonModule
+
+#### Input value
+
+- value
+  - string | number
+  - The value to be formatted.
+
+#### Parameters
+
+- digitsInfo
+
+  - string
+  - Sets digit and decimal representation. See more.
+  - Optional. Default is undefined.
+
+- locale
+
+  - string
+  - Specifies what locale format rules to use. See more.
+  - Optional. Default is undefined.
+
+#### See also
+
+- [formatNumber()](https://angular.io/api/common/formatNumber)
+
+#### Usage notes
+
+##### digitsInfo
+
+- The value's decimal representation is specified by the digitsInfo parameter, written in the following format:
+
+  ```
+  {minIntegerDigits}.{minFractionDigits}-{maxFractionDigits}
+  ```
+
+  - `minIntegerDigits`: The minimum number of integer digits before the decimal point. Default is 1.
+
+  - `minFractionDigits`: The minimum number of digits after the decimal point. Default is 0.
+
+  - `maxFractionDigits`: The maximum number of digits after the decimal point. Default is 3.
+
+- If the formatted value is truncated it will be rounded using the "to-nearest" method:
+
+  ```
+  {{3.6 | number: '1.0-0'}}
+  <!--will output '4'-->
+
+  {{-3.6 | number:'1.0-0'}}
+  <!--will output '-4'-->
+  ```
+
+##### locale
+
+- `locale` will format a value according to locale rules. Locale determines group sizing and separator, decimal point character, and other locale-specific configurations.
+
+When not supplied, uses the value of [LOCALE_ID](https://angular.io/api/core/LOCALE_ID), which is `en-US` by default.
+
+##### Example
+
+The following code shows how the pipe transforms values according to various format specifications, where the caller's default locale is `en-US`.
+
+```
+@Component({
+  selector: 'number-pipe',
+  template: `<div>
+
+    <p>
+      No specified formatting:
+      {{pi | number}}
+      <!--output: '3.142'-->
+    </p>
+
+    <p>
+      With digitsInfo parameter specified:
+      {{pi | number:'4.1-5'}}
+      <!--output: '0,003.14159'-->
+    </p>
+
+    <p>
+      With digitsInfo and
+      locale parameters specified:
+      {{pi | number:'4.1-5':'fr'}}
+      <!--output: '0 003,14159'-->
+    </p>
+
+  </div>`
+})
+export class NumberPipeComponent {
+  pi: number = 3.14159265359;
+}
+```
+
 ## Error reference
 
 ### NG0100: Expression has changed after it was checked
