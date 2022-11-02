@@ -210,6 +210,128 @@ export class NumberPipeComponent {
 }
 ```
 
+### CurrencyPipe
+
+- Transforms a number to a currency string, formatted according to locale rules that determine group sizing and separator, decimal-point character, and other locale-specific configurations.
+
+  ```
+  {{ value_expression | currency [ : currencyCode [ : display [ : digitsInfo [ : locale ] ] ] ] }}
+  ```
+
+#### Exported from
+
+- CommonModule
+
+#### Input value
+
+- value
+  - string | number
+  - The number to be formatted as currency.
+
+#### Parameters
+
+- **currencyCode**
+
+  - string
+  - The `ISO 4217` currency code, such as `USD` for the US dollar and `EUR` for the euro. The default currency code can be configured using the `DEFAULT_CURRENCY_CODE` injection token.
+
+  - Optional. Default is `this._defaultCurrencyCode`.
+
+- **display**
+
+  - string | boolean
+  - The format for the currency indicator. One of the following:
+
+    - `code`: Show the code (such as USD).
+
+    - `symbol`(default): Show the symbol (such as `$`).
+
+    - `symbol-narrow`: Use the narrow symbol for locales that have two symbols for their currency. For example, the Canadian dollar CAD has the symbol `CA$` and the symbol-narrow `$`. If the locale has no narrow symbol, uses the standard symbol for the locale.
+
+    - String: Use the given string value instead of a code or a symbol. For example, an empty string will suppress the currency & symbol.
+
+    - Boolean (marked deprecated in v5): `true` for symbol and `false` for code.
+
+  - Optional. Default is `'symbol'`.
+
+- **digitsInfo**
+
+  - string
+
+  - Decimal representation options, specified by a string in the following format:
+    `{minIntegerDigits}.{minFractionDigits}-{maxFractionDigits}`.
+
+    - `minIntegerDigits`: The minimum number of integer digits before the decimal point. Default is `1`.
+
+    - `minFractionDigits`: The minimum number of digits after the decimal point. Default is `2`.
+
+    - `maxFractionDigits`: The maximum number of digits after the decimal point. Default is `2`. If not provided, the number will be formatted with the proper amount of digits, depending on what the `ISO 4217` specifies. For example, the Canadian dollar has 2 digits, whereas the Chilean peso has none.
+
+  - Optional. Default is `undefined`.
+
+- **locale**
+
+  - string
+
+  - A locale code for the locale format rules to use. When not supplied, uses the value of `LOCALE_ID`, which is `en-US` by default. See `Setting your app locale`.
+
+  - Optional. Default is `undefined`.
+
+#### See also
+
+- [getCurrencySymbol()](https://angular.io/api/common/getCurrencySymbol)
+
+- [formatCurrency()](https://angular.io/api/common/formatCurrency)
+
+#### Description
+
+- **Deprecation notice:**
+
+  - The default currency code is currently always `USD` but this is deprecated from v9.
+
+  - **In v11 the default currency code will be taken from the current locale identified by the `LOCALE_ID` token. See the `i18n guide` for more information.**
+
+  - If you need the previous behavior then set it by creating a `DEFAULT_CURRENCY_CODE` provider in your application NgModule:
+    ```
+    {provide: DEFAULT_CURRENCY_CODE, useValue: 'USD'}
+    ```
+
+#### Usage notes
+
+- The following code shows how the pipe transforms numbers into text strings, according to various format specifications, where the caller's default locale is `en-US`.
+
+  ```
+  @Component({
+    selector: 'currency-pipe',
+    template: `<div>
+      <!--output '$0.26'-->
+      <p>A: {{a | currency}}</p>
+
+      <!--output 'CA$0.26'-->
+      <p>A: {{a | currency:'CAD'}}</p>
+
+      <!--output 'CAD0.26'-->
+      <p>A: {{a | currency:'CAD':'code'}}</p>
+
+      <!--output 'CA$0,001.35'-->
+      <p>B: {{b | currency:'CAD':'symbol':'4.2-2'}}</p>
+
+      <!--output '$0,001.35'-->
+      <p>B: {{b | currency:'CAD':'symbol-narrow':'4.2-2'}}</p>
+
+      <!--output '0 001,35 CA$'-->
+      <p>B: {{b | currency:'CAD':'symbol':'4.2-2':'fr'}}</p>
+
+      <!--output 'CLP1' because CLP has no cents-->
+      <p>B: {{b | currency:'CLP'}}</p>
+    </div>`
+  })
+  export class CurrencyPipeComponent {
+    a: number = 0.259;
+    b: number = 1.3495;
+  }
+  ```
+
 ## Error reference
 
 ### NG0100: Expression has changed after it was checked

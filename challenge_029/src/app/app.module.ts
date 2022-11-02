@@ -4,11 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DecimalPipeComponent } from './decimal-pipe/decimal-pipe.component';
+import { CurrencyPipeComponent } from './currency-pipe/currency-pipe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DecimalPipeComponent
+    DecimalPipeComponent,
+    CurrencyPipeComponent
   ],
   imports: [
     BrowserModule,
