@@ -12,12 +12,12 @@
 
 - Angular provides built-in pipes for typical data transformations, including transformations for internationalization (i18n), which use locale information to format data. The following are commonly used built-in pipes for data formatting:
 
-  - DatePipe: Formats a date value according to locale rules.
-  - UpperCasePipe: Transforms text to all upper case.
-  - LowerCasePipe: Transforms text to all lower case.
-  - CurrencyPipe: Transforms a number to a currency string, formatted according to locale rules.
-  - DecimalPipe: Transforms a number into a string with a decimal point, formatted according to locale rules.
-  - PercentPipe: Transforms a number to a percentage string, formatted according to locale rules.
+  - [DatePipe](https://angular.io/api/common/DatePipe): Formats a date value according to locale rules.
+  - [UpperCasePipe](https://angular.io/api/common/UpperCasePipe): Transforms text to all upper case.
+  - [LowerCasePipe](https://angular.io/api/common/LowerCasePipe): Transforms text to all lower case.
+  - [CurrencyPipe](https://angular.io/api/common/CurrencyPipe): Transforms a number to a currency string, formatted according to locale rules.
+  - [DecimalPipe](https://angular.io/api/common/DecimalPipe): Transforms a number into a string with a decimal point, formatted according to locale rules.
+  - [PercentPipe](https://angular.io/api/common/PercentPipe): Transforms a number to a percentage string, formatted according to locale rules.
 
 ### Pipes and precedence
 

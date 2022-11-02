@@ -178,6 +178,7 @@ Angular challenges
   - [API reference](challenge_029/README.md#api-reference)
     - [DecimalPipe](challenge_029/README.md#decimalpipe)
     - [CurrencyPipe](challenge_029/README.md#currencypipe)
+    - [DatePipe](challenge_029/README.md#datepipe)
   - [Error reference](challenge_029/README.md#error-reference)
   - [Extended diagnostic reference](challenge_029/README.md#extended-diagnostic-reference)
   - [Angular glossary](challenge_029/README.md#angular-glossary)
