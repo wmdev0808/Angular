@@ -28,6 +28,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { DashboardComponent } from './schematics/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
+import { TreeComponent } from './schematics/tree/tree.component';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { MatMenuModule } from '@angular/material/menu';
     AddressFormComponent,
     TableComponent,
     DashboardComponent,
+    TreeComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSortModule,
     MatGridListModule,
     MatMenuModule,
+    MatTreeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
