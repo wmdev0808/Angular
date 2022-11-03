@@ -1,5 +1,16 @@
 import { map } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  AfterViewChecked,
+  OnChanges,
+  OnInit,
+  DoCheck,
+  AfterContentInit,
+  AfterContentChecked,
+  AfterViewInit,
+  SimpleChanges,
+  OnDestroy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavTitleService } from '../nav-title.service';
 

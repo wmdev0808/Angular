@@ -1,9 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { NavTitleService } from '../nav-title.service';
-import { ActivatedRoute, Params, UrlSegment } from '@angular/router';
+import { DoCheck } from '@angular/core';
 
 @Component({
   selector: 'app-nav',
@@ -18,15 +29,18 @@ export class NavComponent implements OnInit {
       shareReplay()
     );
 
-  currentNavTitle$?: Observable<string>;
+  currentNavTitle?: string;
 
   constructor(
-    private route: ActivatedRoute,
     private breakpointObserver: BreakpointObserver,
+    private cd: ChangeDetectorRef,
     private navTitleService: NavTitleService
   ) {}
 
   ngOnInit() {
-    this.currentNavTitle$ = this.navTitleService.navTitle$;
+    this.navTitleService.navTitle$.subscribe((title) => {
+      this.currentNavTitle = title;
+      this.cd.detectChanges();
+    });
   }
 }

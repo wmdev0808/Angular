@@ -14,9 +14,9 @@ export class SchematicsComponent implements OnInit {
     private navTitleService: NavTitleService
   ) {}
 
-  ngOnInit(): void {
-    this.route.data
-      .pipe(map((data) => data['title']))
-      .subscribe((title) => this.navTitleService.navTitle$.next(title));
+  ngOnInit() {
+    this.route.data.pipe(map((data) => data['title'])).subscribe((title) => {
+      this.navTitleService.navTitle$.next(title);
+    });
   }
 }
