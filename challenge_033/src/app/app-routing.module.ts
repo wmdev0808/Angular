@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Data } from '@angular/router';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
 import { SchematicsComponent } from './schematics/schematics.component';
 
@@ -9,8 +9,16 @@ const routes: Routes = [
     redirectTo: 'getting-started',
     pathMatch: 'full',
   },
-  { path: 'getting-started', component: GettingStartedComponent },
-  { path: 'schematics', component: SchematicsComponent },
+  {
+    path: 'getting-started',
+    component: GettingStartedComponent,
+    data: { title: 'Getting Started' },
+  },
+  {
+    path: 'schematics',
+    component: SchematicsComponent,
+    data: { title: 'Schematics' },
+  },
 ];
 
 @NgModule({

@@ -37,7 +37,7 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Angular Material</span>
+      <span>{{ currentNavTitle$ | async }}</span>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>
