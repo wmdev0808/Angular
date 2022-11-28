@@ -196,3 +196,8 @@ Angular challenges
   - [Hierarchical injectors](../challenge_015/README.md)
 - [Tempaltes](challenge_032/README.md)
   - [SVG as templates](challenge_032/README.md#svg-as-templates)
+- [Angular Material](./challenge_033/README.md)
+  - [Getting Started](./challenge_033/README.md#getting-started-with-angular-material)
+  - [Schematics](./challenge_033/README.md#schematics)
+  - [Theming Angular Material](./challenge_034/README.md#theming-angular-material)
+  - [Theme your own components](./challenge_034/README.md#theme-your-own-components-with-angular-materials-theming-system)
