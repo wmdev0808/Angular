@@ -203,3 +203,4 @@ Angular challenges
   - [Theme your own components](./challenge_034/README.md#theme-your-own-components-with-angular-materials-theming-system)
   - [Customizing Typography](./challenge_034/README.md#customizing-typography)
   - [Customizing component styles](./challenge_034/README.md#customizing-angular-material-component-styles)
+  - [Custom form field control](./challenge_034/README.md#creating-a-custom-form-field-control)
