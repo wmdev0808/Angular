@@ -202,3 +202,4 @@ Angular challenges
   - [Theming Angular Material](./challenge_034/README.md#theming-angular-material)
   - [Theme your own components](./challenge_034/README.md#theme-your-own-components-with-angular-materials-theming-system)
   - [Customizing Typography](./challenge_034/README.md#customizing-typography)
+  - [Customizing component styles](./challenge_034/README.md#customizing-angular-material-component-styles)
