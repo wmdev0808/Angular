@@ -204,3 +204,5 @@ Angular challenges
   - [Customizing Typography](./challenge_034/README.md#customizing-typography)
   - [Customizing component styles](./challenge_034/README.md#customizing-angular-material-component-styles)
   - [Custom form field control](./challenge_034/README.md#creating-a-custom-form-field-control)
+  - [Elevation helpers](./challenge_034/README.md#applying-elevation)
+  - [Custom stepper using the CdkStepper](./challenge_034/README.md#creating-a-custom-stepper-using-the-cdk-stepper)

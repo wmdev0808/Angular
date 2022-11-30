@@ -10,12 +10,14 @@ import {
 } from './form-field-custom-control-example/form-field-custom-control-example.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialExampleModule } from 'src/material.module';
+import { ElevationOverviewExampleComponent } from './elevation-overview-example/elevation-overview-example.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormFieldCustomControlExampleComponent,
     MyTelInput,
+    ElevationOverviewExampleComponent,
   ],
   imports: [
     BrowserModule,

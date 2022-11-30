@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ElevationOverviewExampleComponent } from './elevation-overview-example/elevation-overview-example.component';
 import { FormFieldCustomControlExampleComponent } from './form-field-custom-control-example/form-field-custom-control-example.component';
 
 const routes: Routes = [
@@ -8,6 +9,7 @@ const routes: Routes = [
     path: 'custom-form-field-control',
     component: FormFieldCustomControlExampleComponent,
   },
+  { path: 'elevation', component: ElevationOverviewExampleComponent },
 ];
 
 @NgModule({
