@@ -1718,3 +1718,228 @@ Angular Material supports customizing color, typography, and density as outlined
 
   ...
   ```
+
+# Migrating to MDC-based Angular Material Components
+
+- In Angular Material v15, many of the components have been refactored to be based on the official [Material Design Components for Web (MDC)](https://github.com/material-components/material-components-web). The components from the following imports have been refactored:
+
+  | Import path                        | Summary of changes                                   |
+  | ---------------------------------- | ---------------------------------------------------- |
+  | @angular/material/autocomplete     | Style changes only                                   |
+  | @angular/material/button           | Style changes, API changes                           |
+  | @angular/material/card             | Style changes only                                   |
+  | @angular/material/checkbox         | Style changes, changes to event behavior             |
+  | @angular/material/chips            | Complete rewrite                                     |
+  | @angular/material/core             | Style changes only                                   |
+  | @angular/material/dialog           | Style changes, changes to change detection behavior  |
+  | @angular/material/form-field       | Style changes, some appearances removed, API changes |
+  | @angular/material/input            | Style changes only                                   |
+  | @angular/material/list             | Style changes, API changes                           |
+  | @angular/material/menu             | Style changes, API changes                           |
+  | @angular/material/paginator        | Style changes only                                   |
+  | @angular/material/progress-bar     | Style changes only                                   |
+  | @angular/material/progress-spinner | Style changes only                                   |
+  | @angular/material/radio            | Style changes only                                   |
+  | @angular/material/select           | Style changes only                                   |
+  | @angular/material/slide-toggle     | Style changes only                                   |
+  | @angular/material/slider           | Complete rewrite                                     |
+  | @angular/material/snack-bar        | Style changes, API changes                           |
+  | @angular/material/table            | Style changes only                                   |
+  | @angular/material/tabs             | Style changes, API changes                           |
+  | @angular/material/tooltip          | Style changes only                                   |
+
+- The refactored components offer several benefits over the old implementations, including:
+
+  - Improved accessibility
+  - Better adherence to the Material Design spec
+  - Faster adoption of future versions of the Material Design spec, due to being based on common infrastructure
+
+## What has changed?
+
+- The new components have different internal DOM and CSS styles. However, most of the TypeScript APIs and component/directive selectors for the new components have been kept as close as possible to the old implementation. This makes it straightforward to migrate your application and get it running with the new components.
+
+- Due to the new DOM and CSS, you will likely find that some styles in your application need to be adjusted, particularly if your CSS is overriding styles on internal elements on any of the migrated components.
+
+- There are a few components with larger changes to their APIs that were necessary in order to integrate with MDC. These components include:
+
+  - form-field
+  - chips
+  - slider
+  - list
+
+- The old implementation of each new component is now deprecated, but still available from a "legacy" import. For example, you can import the old `mat-button` implementation can be used by importing the legacy button module.
+
+  ```
+  import {MatLegacyButtonModule} from '@angular/material/legacy-button';
+  ```
+
+## How to Migrate
+
+- You can start your migration by running Angular Material's automated refactoring tool. This tool, implemented as an `Angular Schematic`, updates the majority your code to the new component versions. While some follow-up is necessary, you can reduce the manual effort by following these best practices:
+
+- You can reduce the amount of manual effort needed by ensuring that your application follows good practices before migrating.
+
+  - Avoid overriding styles on internal Angular Material elements in your CSS as much as possible. If you find yourself frequently overriding styles on internal elements, consider using a component that is designed for more style customization, such as the ones available in the [Angular CDK](https://material.angular.io/guide/cdk).
+
+  - Use component harnesses to interact with Angular Material components in tests rather than inspecting internal elements, properties, or methods of the component. Using component harnesses makes your tests easier to understand and more robust to changes in Angular Material
+
+### 1. Update to Angular Material v15
+
+- Angular Material includes a schematic to help migrate applications to use the new MDC-based components. To get started, upgrade your application to Angular Material 15.
+
+  ```
+  ng update @angular/material^15
+  ```
+
+  - As part of this update, a schematic will run to automatically move your application to use the "legacy" imports containing the old component implementations. This provides a quick path to getting your application running on v15 with minimal manual changes.
+
+### 2. Run the migration tool
+
+- After upgrading to v15, you can run the migration tool to switch from the legacy component implementations to the new MDC-based ones.
+
+  ```
+  ng generate @angular/material:mdc-migration
+  ```
+
+  - This command updates your TypeScript, styles, and templates to the new implementations, updating as much as it can automatically.
+
+#### Running a Partial Migration
+
+- Depending on the size and complexity of your application, you may want to migrate a single component or small group of components at a time, rather than all components at once.
+
+- You may also want to migrate your app one module at a time instead of all together. You can use both the old implementation and new implementation in the same application, as long as they aren't used in the same `NgModule`.
+
+- The script will prompt you for the directory and components you want to migrate.
+
+### 3. Check for TODOs left by the migration tool.
+
+- In situations where the migration tool is not able to automatically update your code, it will attempt to add comments for a human to follow up. These TODO comments follow a common format, so they can be easily identified.
+
+  ```
+  // TODO(mdc-migration): ...
+  ```
+
+- To search for all comments left by the migration tool, search for `TODO(mdc-migration):` in your IDE.
+
+### 4. Verify Your Application
+
+- After running the migration and addressing the TODOs, manually verify that everything is working correctly.
+
+- Run your tests and confirm that they pass. It's possible that your tests depended on internal DOM or async timing details of the old component implementations and may need to be updated. If you find you need to update some tests, consider using `component harnesses` to make the tests more robust.
+
+- Run your application and verify that the new components look right. Due to the changes in internal DOM and CSS of the components, you may need to tweak some of your application's styles.
+
+## Comprehensive List of Changes
+
+### Library-wide Changes
+
+- Component size, color, spacing, shadows, and animations all change slightly across the board. These changes generally improve spec-compliance and accessibility.
+
+- The DOM structure for all components has changed to improve accessibility and better follow the Material Design spec.
+
+- CSS classes applied to components use the `mat-mdc-` prefix, whereas before it was simply a `mat-` prefix. Elements that roughly correspond to element in the old implementation have been given the same class name (aside from the prefix). For example, the button’s host class is `mat-mdc-button` instead of `mat-button`. However, not all elements in the previous implementation have an equivalent element in the new implementation.
+
+### Theming
+
+- Default typography levels defined by `mat.define-typography-config` have been updated to reflect changes to the Material Design spec.
+
+- All components now have themeable density. Styles for the default density level (0) will be included by default when you include a theme mixin.
+
+  ```
+  @import '@angular/material' as mat;
+
+  $theme: mat.define-light-theme((
+    color: ...
+  ));
+
+  // Adds density level 0 styles
+  @include mat.all-component-themes($theme);
+  ```
+
+- If you prefer a different default density level, you can set it in your theme config:
+
+  ```
+  $theme: mat.define-light-theme((
+    color: ...,
+    density: -1
+  ));
+  ```
+
+### Autocomplete
+
+### Button
+
+...
+
+- Theming mixins are split into three separate mixins:
+
+  - Normal button (default, raised, stroked, flat): mat.mdc-button-theme
+  - Icon button: mat.mdc-icon-button-theme
+  - FAB: mat.mdc-fab-theme
+
+- Icons in the button content are placed before the button text. Add the `iconPositionEnd` attribute to place them after the button text.
+
+- Icons in the button content inherit the text font-size. Buttons with only icons and no text do not align properly (this does not apply to the icon-button).
+
+### Card
+
+- `<mat-card-content>` no longer sets any typography styles, users are free to add whatever typography styles make sense for their application, either to `<mat-card-content>` itself or any child elements as appropriate. For example:
+
+  ```
+  @use '@angular/material' as mat;
+  @include mat.typography-hierarchy();
+  ```
+
+  ```
+  <mat-card>
+    <mat-card-content class="mat-body-1">...</mat-card-content>
+  </mat-card>
+  ```
+
+### Checkbox
+
+### Chips
+
+### Dialog
+
+### Form Field
+
+### Input
+
+- MatInput must be inside `<mat-form-field>`. Previously it was (unintentionally) possible to use an `<input matInput> `without the form field if the page loaded form field styles elsewhere.
+
+- The MDC-based MatInput hides the native calendar picker indicator associated with `<input matInput type="date">`, if you want this indicator to appear for your inputs, use the following styles:
+
+  ```
+  .mat-mdc-input-element::-webkit-calendar-picker-indicator {
+    display: block;
+  }
+  ```
+
+### List
+
+### Menu
+
+### Option / Optgroup
+
+### Paginator
+
+### Progress Bar
+
+### Progress Spinner
+
+### Radio
+
+### Select
+
+### Slide Toggle
+
+### Slider
+
+### Snack Bar
+
+### Table
+
+### Tabs
+
+### Tooltip
