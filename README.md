@@ -206,3 +206,4 @@ Angular challenges
   - [Custom form field control](./challenge_034/README.md#creating-a-custom-form-field-control)
   - [Elevation helpers](./challenge_034/README.md#applying-elevation)
   - [Custom stepper using the CdkStepper](./challenge_034/README.md#creating-a-custom-stepper-using-the-cdk-stepper)
+  - [Testing with component harnesses](./challenge_034/README.md#using-angular-materials-component-harnesses-in-your-tests)
