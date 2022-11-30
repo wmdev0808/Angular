@@ -11,6 +11,10 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialExampleModule } from 'src/material.module';
 import { ElevationOverviewExampleComponent } from './elevation-overview-example/elevation-overview-example.component';
+import {
+  CustomStepper,
+  ExampleCustomStepperComponent,
+} from './example-custom-stepper/example-custom-stepper.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +22,8 @@ import { ElevationOverviewExampleComponent } from './elevation-overview-example/
     FormFieldCustomControlExampleComponent,
     MyTelInput,
     ElevationOverviewExampleComponent,
+    ExampleCustomStepperComponent,
+    CustomStepper,
   ],
   imports: [
     BrowserModule,

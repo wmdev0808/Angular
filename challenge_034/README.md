@@ -1287,3 +1287,7 @@ Angular Material supports customizing color, typography, and density as outlined
   ```
 
 # Creating a custom stepper using the CDK stepper
+
+- The [CDK stepper](https://material.angular.io/cdk/stepper/overview) allows to build a custom stepper which you can completely style yourself without any specific Material Design styling.
+
+- In this guide, we'll learn how we can build our own custom stepper using the CDK stepper.
