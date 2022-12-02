@@ -209,3 +209,4 @@ Angular challenges
   - [Testing with component harnesses](./challenge_034/README.md#using-angular-materials-component-harnesses-in-your-tests)
   - [Duplicate theming styles](./challenge_034/README.md#avoiding-duplicated-theming-styles)
   - [Migrating to MDC-based Components](./challenge_034/README.md#migrating-to-mdc-based-angular-material-components)
+  - [Practice: Angular Material Theming System](./challenge_035/README.md)

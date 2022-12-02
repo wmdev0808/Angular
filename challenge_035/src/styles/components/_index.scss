@@ -1,0 +1,10 @@
+// src/styles/components/_index.scss
+
+@use "../../app/shared/components/alert/alert-theme" as alert;
+@use "./button/variants" as button-variants;
+
+@mixin theme($theme, $typography-config, $variants) {
+  @include alert.theme($theme, $typography-config);
+  @debug $variants;
+  @include button-variants.color($theme, $variants);
+}
