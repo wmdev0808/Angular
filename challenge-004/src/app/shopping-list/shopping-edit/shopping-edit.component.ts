@@ -1,5 +1,5 @@
 import { NgForm } from '@angular/forms';
-import { ShoppingListService } from './../shopping-list.service';
+import { ShoppingListService } from '../shopping-list.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Ingredient } from 'src/app/shared/ingredient.modle';
 import { Subscription } from 'rxjs';

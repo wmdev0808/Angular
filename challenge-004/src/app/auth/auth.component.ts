@@ -1,4 +1,4 @@
-import { PlaceholderDirective } from './../shared/placeholder.directive';
+import { PlaceholderDirective } from '../shared/placeholder.directive';
 import { NgForm } from '@angular/forms';
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
